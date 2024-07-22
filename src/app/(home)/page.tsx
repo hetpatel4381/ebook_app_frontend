@@ -8,7 +8,11 @@ import { Book } from "@/types";
 export default async function Home() {
   // data fetching.
   // use fetch method in next because it gives more functionality to server components then axios.
-  const response = await fetch(`${process.env.BACKEND_URL}/books`);
+  const response = await fetch(`${process.env.BACKEND_URL}/books`, {
+    headers: {
+      "Cache-Control": "no-store, no-cache, must-revalidate",
+    },
+  });
 
   if (!response.ok) {
     throw new Error("An error occure while fetching the Books!");
@@ -16,6 +20,7 @@ export default async function Home() {
 
   const booksData = await response.json();
   const books: Book[] = JSON.parse(JSON.stringify(booksData.listOfBooks));
+  console.log(books);
 
   return (
     <>
