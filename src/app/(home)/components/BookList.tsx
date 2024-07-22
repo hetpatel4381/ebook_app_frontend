@@ -6,7 +6,9 @@ const BookList = async () => {
   // data fetching.
   // use fetch method in next because it gives more functionality to server components then axios.
   const response = await fetch(`${process.env.BACKEND_URL}/books`, {
-    cache: "no-store",
+    next: {
+      revalidate: 3600,
+    },
   });
 
   if (!response.ok) {
