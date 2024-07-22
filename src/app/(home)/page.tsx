@@ -20,7 +20,6 @@ export default async function Home() {
 
   const booksData = await response.json();
   const books: Book[] = JSON.parse(JSON.stringify(booksData.listOfBooks));
-  console.log(books);
 
   return (
     <>

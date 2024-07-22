@@ -3,28 +3,23 @@ import Image from "next/image";
 import React from "react";
 
 const SingleBookPage = async ({ params }: { params: { bookId: string } }) => {
-  console.log("params", params);
   let book: Book | null = null;
 
   try {
     // Decode the bookId parameter
     const decodedBookId = decodeURIComponent(params.bookId).replace(/^:/, "");
-    console.log("Decoded Book ID:", decodedBookId);
 
     const response = await fetch(
       `${process.env.BACKEND_URL}/books/${decodedBookId}`
     );
-    // console.log("Response", response);
 
     if (!response.ok) {
       const errorData = await response.json();
-      console.error("Error response data:", errorData);
       throw new Error("Error Fetching Book!");
     }
 
     const bookData = await response.json();
     book = bookData.singleBook as Book;
-    console.log("Fetched book:", book);
   } catch (err: any) {
     console.error("Fetch error:", err);
     throw new Error("Error Fetching Book!");
